@@ -58,7 +58,7 @@ export default function App() {
       <header>
         <div>
           <h1>BugTrack</h1>
-          <p>Keep track of every bug until it is fixed</p>
+          <p>live demo flow</p>
         </div>
         <button className="primary" onClick={() => openForm(EMPTY)}>+ Add bug</button>
       </header>
