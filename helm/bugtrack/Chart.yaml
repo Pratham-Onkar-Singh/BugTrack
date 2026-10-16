@@ -1,0 +1,5 @@
+apiVersion: v2
+name: bugtrack
+description: BugTrack issue tracker
+version: 1.0.0
+appVersion: "1.0.0"
