@@ -1,0 +1,18 @@
+.env
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
+node_modules/
+dist/
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
+!*.tfvars.example
+.DS_Store
+tfplan
+*.tfplan
+
+# Presentation belongs to someone else, not part of this repo
+PlaceTrack-Capstone.pptx
