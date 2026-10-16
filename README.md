@@ -2,6 +2,8 @@
 
 BugTrack is a small app for keeping track of bugs until they are fixed. You add a bug with a title and a component, and move it through **open**, **investigating**, **resolved** and **closed**. The app itself is simple on purpose. Most of the work in this project is the DevOps side around it: tests, Docker, a CI/CD pipeline with a security scan, Terraform on AWS, Kubernetes with Helm, and monitoring.
 
+Presentation for the demo: [BugTrack-Capstone.pptx](BugTrack-Capstone.pptx)
+
 ![App](images/01-app-compose.png)
 
 ## Contents
