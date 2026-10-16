@@ -158,7 +158,7 @@ Both images are public in GHCR with the commit SHA as the tag:
 
 Trivy scans both images in the pipeline and fails the job on fixable HIGH or CRITICAL findings (`severity: HIGH,CRITICAL`, `ignore-unfixed: true`, `exit-code: 1`). The scan runs before the push step, so an image with a known fixable problem never reaches GHCR.
 
-A clean scan does not mean the image is safe forever, only that nothing fixable was known on that day. That is why it runs on every build.
+**What the scan found.** Trivy checked the operating system packages of each image and, for the backend, the Python packages from `requirements.txt`. The backend image (Debian 13.7) and the frontend image (Alpine 3.24.2) both came back with 0 vulnerabilities, so the job passed and the images were pushed. A clean scan does not mean the image is safe forever, only that nothing fixable was known on that day. That is why it runs on every build.
 
 ![Trivy backend](images/08-trivy-backend.png)
 
@@ -247,7 +247,15 @@ Prometheus scrapes all backend pods and they are all `UP`:
 
 ![prometheus targets](images/16-prom-targets.png)
 
-The dashboard shows 3 pods because the HPA had just scaled up:
+To open Grafana and Prometheus from my laptop I used port-forwards. `install.sh` creates the Grafana admin password and stores it in a Secret, so it is never in the repo:
+
+```bash
+kubectl -n monitoring get secret grafana-admin -o jsonpath='{.data.admin-password}' | base64 -d   # user: admin
+kubectl -n monitoring port-forward svc/monitoring-grafana 3001:80                                  # http://localhost:3001
+kubectl -n monitoring port-forward svc/monitoring-kube-prometheus-prometheus 9090:9090            # http://localhost:9090
+```
+
+The dashboard shows 3 pods because the HPA had just scaled up. For this screenshot I installed Grafana with anonymous viewing switched on (`--set grafana."grafana\.ini".auth.anonymous.enabled=true`, role Viewer), so the page opens without a login. With the plain `install.sh` you log in as `admin` with the password above.
 
 ![grafana](images/17-grafana.png)
 
