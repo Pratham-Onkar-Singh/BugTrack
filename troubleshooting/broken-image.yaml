@@ -1,0 +1,12 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: { name: tb-image, namespace: bugtrack }
+spec:
+  replicas: 1
+  selector: { matchLabels: { app: tb-image } }
+  template:
+    metadata: { labels: { app: tb-image } }
+    spec:
+      containers:
+        - name: app
+          image: ghcr.io/pratham-onkar-singh/bugtrack-backend:does-not-exist
