@@ -1,0 +1,35 @@
+# ArgoCD Application: keeps the bugtrack namespace in sync with this repo.
+# Apply once with: kubectl apply -f argocd/application.yaml
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: bugtrack
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/Pratham-Onkar-Singh/BugTrack.git
+    targetRevision: main
+    path: helm/bugtrack
+    helm:
+      valueFiles:
+        - ../../argocd/values.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: bugtrack
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - RespectIgnoreDifferences=true
+  # The chart makes the database password with `lookup`, which ArgoCD cannot use,
+  # so every render would create a new random password. Ignore the Secret data and
+  # keep the password that was created on the first sync.
+  ignoreDifferences:
+    - group: ""
+      kind: Secret
+      name: bugtrack-db
+      jsonPointers:
+        - /data

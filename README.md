@@ -8,7 +8,7 @@ Presentation for the demo: [BugTrack-Capstone.pptx](demo/BugTrack-Capstone.pptx)
 
 ## Contents
 
-[Architecture](#architecture) · [Quick start](#quick-start) · [M1 App](#m1-the-app) · [M2 Tests](#m2-tests) · [M3 Git](#m3-git) · [M4 Docker](#m4-docker) · [M5 CI/CD](#m5-cicd) · [M6 Trivy](#m6-trivy) · [M7 Terraform](#m7-terraform) · [M8 Kubernetes and Helm](#m8-kubernetes-and-helm) · [M9 Monitoring](#m9-monitoring) · [Troubleshooting](#troubleshooting) · [Live demo](#live-demo) · [What I learned](#what-i-learned)
+[Architecture](#architecture) · [Quick start](#quick-start) · [M1 App](#m1-the-app) · [M2 Tests](#m2-tests) · [M3 Git](#m3-git) · [M4 Docker](#m4-docker) · [M5 CI/CD](#m5-cicd) · [M6 Trivy](#m6-trivy) · [M7 Terraform](#m7-terraform) · [M8 Kubernetes and Helm](#m8-kubernetes-and-helm) · [ArgoCD](#gitops-with-argocd) · [M9 Monitoring](#m9-monitoring) · [Troubleshooting](#troubleshooting) · [Live demo](#live-demo) · [What I learned](#what-i-learned)
 
 ## Architecture
 
@@ -230,6 +230,17 @@ For the host name I added `127.0.0.1 bugtrack.local` to `/etc/hosts`.
 When I ran the load test, CPU went above the 60% target and the HPA added a third backend pod:
 
 ![hpa scale out](images/13b-hpa.png)
+
+### GitOps with ArgoCD
+
+ArgoCD keeps the cluster in sync with this repo. `argocd/application.yaml` points it at `helm/bugtrack` on `main`, and `argocd/values.yaml` holds the image tag it should run. To release a version I put the commit SHA the pipeline pushed into that file, commit and push, and ArgoCD rolls it out by itself (automated sync with prune and self-heal).
+
+```bash
+kubectl apply -f argocd/application.yaml
+kubectl -n argocd get application bugtrack        # SYNC STATUS: Synced, HEALTH STATUS: Healthy
+```
+
+The chart creates the database password with `lookup`, which ArgoCD cannot use. The Application ignores differences on that one Secret, so the password made on the first sync is kept.
 
 ## M9: Monitoring
 

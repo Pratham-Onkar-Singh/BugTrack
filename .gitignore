@@ -16,3 +16,6 @@ tfplan
 
 # Presentation belongs to someone else, not part of this repo
 PlaceTrack-Capstone.pptx
+
+# LibreOffice lock files
+.~lock.*#

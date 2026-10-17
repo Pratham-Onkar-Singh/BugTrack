@@ -1,0 +1,9 @@
+# Values ArgoCD passes to helm/bugtrack. To release a new version, change the tag
+# to the commit SHA the pipeline pushed to GHCR, commit and push: ArgoCD does the rest.
+image:
+  registry: ghcr.io/pratham-onkar-singh
+  tag: 96a21c4d523af826651522e3f1a6606b932c2812
+ingress:
+  host: bugtrack.localhost
+serviceMonitor:
+  enabled: true
