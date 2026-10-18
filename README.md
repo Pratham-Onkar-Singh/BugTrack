@@ -4,6 +4,8 @@ BugTrack is a small app for keeping track of bugs until they are fixed. You add 
 
 Presentation for the demo: [BugTrack-Capstone.pptx](demo/BugTrack-Capstone.pptx)
 
+Video walkthrough: [Google Drive](https://drive.google.com/file/d/1Zs5VHadKSqDcJOwn1E7aZ6y9EJP7aV7m/view?usp=sharing) (the same file is in [demo/BugTrack_DevOps_Project.mp4](demo/BugTrack_DevOps_Project.mp4))
+
 ![App](images/01-app-compose.png)
 
 ## Contents
